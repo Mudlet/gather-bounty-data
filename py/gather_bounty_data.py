@@ -120,7 +120,7 @@ def main():
 
     with open("\bounty.txt", "w") as out_file:
         for line in sorted(bounties):
-            out_file.write(line)
+            out_file.write(str(line))
     
 
 if __name__ == "__main__":
