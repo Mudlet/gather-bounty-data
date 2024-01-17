@@ -119,8 +119,7 @@ def main():
         bounties.update(parse_issue(issue))
 
     with open("bounty.txt", "w") as out_file:
-        for line in sorted(bounties):
-            out_file.write(str(line))
+        out_file.write("\n".join(str(line) for line in sorted(bounties))
     
 
 if __name__ == "__main__":
