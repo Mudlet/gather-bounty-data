@@ -1,0 +1,40 @@
+name: Count labels
+on:
+  workflow_dispatch:
+
+jobs:
+  gather-data:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v4
+
+      - name: Setup python # with given version 
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' 
+
+      - name: Install python packages # from requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r py/requirements.txt
+
+      - name: Run python script
+        run: python py/gather_bounty_data.py
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || (git commit -a -m "Updated bounty data" --allow-empty)
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main 
