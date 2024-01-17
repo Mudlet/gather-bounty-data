@@ -118,7 +118,7 @@ def main():
     for issue in cool_issues:
         bounties.update(parse_issue(issue))
 
-    with open("bounty.txt", "w") as out_file:
+    with open("bounty.txt", "w", encoding="utf-8") as out_file:
         out_file.write("\n".join(str(line) for line in sorted(bounties)))
     
 
