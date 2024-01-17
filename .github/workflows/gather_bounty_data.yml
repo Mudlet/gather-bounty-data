@@ -1,4 +1,4 @@
-name: Count labels
+name: Gather bounty data
 on:
   workflow_dispatch:
 
